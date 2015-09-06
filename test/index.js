@@ -39,6 +39,7 @@ describe('## indexeddb.io', () => {
       return store.get(id)
         .then((result) => {
           expect(result.name).to.equal('haoxin')
+          expect(result.desc).to.equal('hello')
         })
     })
 
@@ -54,6 +55,7 @@ describe('## indexeddb.io', () => {
       return store.get(id)
         .then((result) => {
           expect(result.name).to.equal('haoxin')
+          expect(result.desc).to.equal('hello world')
         })
     })
 
