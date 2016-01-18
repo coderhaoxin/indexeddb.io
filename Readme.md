@@ -56,10 +56,10 @@ store.findOne('name', 'haoxin')
 // find
 
 store.find('name')
-  .then((cursor) => {})
+  .then(cursor => {})
 
 store.find('name', IDBKeyRange.only('haoxin'))
-  .then((cursor) => {})
+  .then(cursor => {})
 
 // remove
 

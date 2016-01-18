@@ -1,6 +1,5 @@
-'use strict'
 
-import { expect } from 'chai'
+import { strictEqual as equal } from 'assert'
 import Store from '../'
 
 describe('## indexeddb.io', () => {
@@ -30,16 +29,23 @@ describe('## indexeddb.io', () => {
         name: 'haoxin',
         desc: 'hello'
       })
-      .then((result) => {
+      .then(result => {
         id = result
+      })
+    })
+
+    it('add another', () => {
+      return store.add({
+        name: 'another haoxin',
+        desc: 'another hello'
       })
     })
 
     it('get', () => {
       return store.get(id)
-        .then((result) => {
-          expect(result.name).to.equal('haoxin')
-          expect(result.desc).to.equal('hello')
+        .then(result => {
+          equal(result.name, 'haoxin')
+          equal(result.desc, 'hello')
         })
     })
 
@@ -53,35 +59,51 @@ describe('## indexeddb.io', () => {
 
     it('get', () => {
       return store.get(id)
-        .then((result) => {
-          expect(result.name).to.equal('haoxin')
-          expect(result.desc).to.equal('hello world')
+        .then(result => {
+          equal(result.name, 'haoxin')
+          equal(result.desc, 'hello world')
         })
     })
 
     it('findOne', () => {
       return store.findOne('name', 'haoxin')
-        .then((result) => {
-          expect(result.name).to.equal('haoxin')
+        .then(result => {
+          equal(result.name, 'haoxin')
         })
     })
 
     it('find', () => {
-      return store.find('name')
-        .then((cursor) => {
-          expect(cursor.value.name).to.equal('haoxin')
+      return store.find('name', 'haoxin')
+        .then(cursor => {
+          equal(cursor.value.name, 'haoxin')
         })
     })
 
     it('find with keyRange', () => {
       return store.find('name', IDBKeyRange.only('haoxin'))
-        .then((cursor) => {
-          expect(cursor.value.name).to.equal('haoxin')
+        .then(cursor => {
+          equal(cursor.value.name, 'haoxin')
         })
     })
 
     it('remove', () => {
       return store.remove(id)
+    })
+
+    it('count should be: 1', () => {
+      return store.count().then(count => {
+        equal(count, 1)
+      })
+    })
+
+    it('clear', () => {
+      return store.clear()
+    })
+
+    it('count should be: 0', () => {
+      return store.count().then(count => {
+        equal(count, 0)
+      })
     })
   })
 })
