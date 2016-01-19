@@ -1,6 +1,6 @@
 {
   "name": "indexeddb.io",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "easy indexeddb api",
   "main": "build/index.js",
   "scripts": {

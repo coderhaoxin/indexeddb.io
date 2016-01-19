@@ -66,6 +66,13 @@ describe('## indexeddb.io', () => {
     })
 
     it('findOne', () => {
+      return store.findOne()
+        .then(result => {
+          equal(result.name, 'haoxin')
+        })
+    })
+
+    it('findOne by - name, value', () => {
       return store.findOne('name', 'haoxin')
         .then(result => {
           equal(result.name, 'haoxin')
@@ -73,16 +80,27 @@ describe('## indexeddb.io', () => {
     })
 
     it('find', () => {
-      return store.find('name', 'haoxin')
-        .then(cursor => {
-          equal(cursor.value.name, 'haoxin')
+      return store.find()
+        .then(items => {
+          equal(items.length, 2)
+          equal(items[0].name, 'haoxin')
+          equal(items[1].name, 'another haoxin')
         })
     })
 
-    it('find with keyRange', () => {
+    it('find by - name, value', () => {
+      return store.find('name', 'haoxin')
+        .then(items => {
+          equal(items.length, 1)
+          equal(items[0].name, 'haoxin')
+        })
+    })
+
+    it('find by - name, keyRange', () => {
       return store.find('name', IDBKeyRange.only('haoxin'))
-        .then(cursor => {
-          equal(cursor.value.name, 'haoxin')
+        .then(items => {
+          equal(items.length, 1)
+          equal(items[0].name, 'haoxin')
         })
     })
 
