@@ -5,7 +5,7 @@ import Store from '../'
 describe('## indexeddb.io', () => {
   describe('# basic', () => {
     const store = new Store({
-      db: 'test',
+      db: 'test01',
       store: {
         name: 'item',
         keyPath: 'id',
@@ -116,6 +116,94 @@ describe('## indexeddb.io', () => {
 
     it('clear', () => {
       return store.clear()
+    })
+
+    it('count should be: 0', () => {
+      return store.count().then(count => {
+        equal(count, 0)
+      })
+    })
+  })
+
+  describe('# findAndRemove - no range', () => {
+    const store = new Store({
+      db: 'test02',
+      store: {
+        name: 'item',
+        keyPath: 'id',
+        autoIncrement: true
+      },
+      indexes: [{
+        name: 'name',
+        property: 'name',
+        unique: false
+      }]
+    })
+
+    it('init', () => {
+      return store.init()
+    })
+
+    it('add', () => {
+      return store.add({
+        name: 'haoxin',
+        desc: 'hello'
+      })
+    })
+
+    it('add', () => {
+      return store.add({
+        name: 'haoxin',
+        desc: 'hello'
+      })
+    })
+
+    it('findAndRemove', () => {
+      return store.findAndRemove()
+    })
+
+    it('count should be: 0', () => {
+      return store.count().then(count => {
+        equal(count, 0)
+      })
+    })
+  })
+
+  describe('# findAndRemove - with range', () => {
+    const store = new Store({
+      db: 'test02',
+      store: {
+        name: 'item',
+        keyPath: 'id',
+        autoIncrement: true
+      },
+      indexes: [{
+        name: 'name',
+        property: 'name',
+        unique: false
+      }]
+    })
+
+    it('init', () => {
+      return store.init()
+    })
+
+    it('add', () => {
+      return store.add({
+        name: 'haoxin',
+        desc: 'hello'
+      })
+    })
+
+    it('add', () => {
+      return store.add({
+        name: 'haoxin',
+        desc: 'hello'
+      })
+    })
+
+    it('findAndRemove', () => {
+      return store.findAndRemove('name', 'haoxin')
     })
 
     it('count should be: 0', () => {

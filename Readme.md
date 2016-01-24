@@ -7,6 +7,25 @@
 
 * Promise based API wrapper for indexeddb.
 
+### APIs
+
+* store
+  - `init`
+
+  - `add`
+  - `put`
+  - `get`
+  - `remove`
+
+  - `find`
+  - `findOne`
+  - `findAndRemove`
+
+  - `count`
+  - `clear`
+
+* index
+
 ### Usage
 
 ```js
@@ -36,6 +55,9 @@ store.add({
   name: 'haoxin',
   desc: 'hello'
 })
+.then(result => {
+  id = result
+})
 
 // get
 
@@ -44,7 +66,7 @@ store.get(id)
 // put
 
 store.put({
-  id: id,
+  id,
   name: 'haoxin',
   desc: 'hello world'
 })
@@ -55,11 +77,13 @@ store.findOne('name', 'haoxin')
 
 // find
 
-store.find('name')
-  .then(cursor => {})
+store.find()
 
 store.find('name', IDBKeyRange.only('haoxin'))
-  .then(cursor => {})
+
+// findAndRemove
+
+store.findAndRemove('name', IDBKeyRange.only('haoxin'))
 
 // remove
 
